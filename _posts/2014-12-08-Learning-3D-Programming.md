@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Learning 3D Programming (is hard)"
-date:   2014-11-14 14:16:23
+title:  "Learning/Teaching 3D Programming (is hard)"
+date:   2014-12-08 14:16:23
 categories: 3D education programming
 ---
 
@@ -17,12 +17,31 @@ and been left staring at a blank screen scratching my head.  Getting your first
 triangle is definitely a lot easier thanks to frameworks like THREE.js, but when
 things go awry it can be difficult to pin down what's going wrong.
 
-## What Can Go Wrong ##
+## Why 3D? ##
 
-There's a lot of stuff that needs to be set up before you see your first triangle.
-If you're coding from scratch using (Open/Web)GL then you'll need to:
+In a previous life I was a high school teacher.  I taught a variety of courses
+in the computer lab including intro programming.  Some of the students were quite
+keen to learn 3D programming because they wanted to make their own games.  Most
+of the games they played were 3D games on consoles and they wanted to do something
+similar.
 
-- create a (Open/Web)GL context
+3D graphics represent the real world and perhaps learning about how to create
+programs that render 3D objects might give students some insights into the
+physcial world.
+
+Lastly, software is being used more and more to interact with the real world
+through robots of various sorts and 3D printers.  Knowledge of 3D programming
+can help with learning to program these types of devices.
+
+## 3D on the Web ##
+
+WebGL is essentially a port OpenGL ES 2.0 to the browser.  It's relatively modern
+in the shaders as opposed to a fixed pipeline which is how OpenGL used to work
+a long time ago.  This provides a lot of flexibility to developers, but getting
+your first triangle on to the screen though involves a lot of steps.  You'll need
+to:
+
+- create a WebGL context
 - write vertex/fragment shaders
 - compile the shader program
 - create buffers with geometry, color, etc. data (this is actually two steps)
@@ -44,7 +63,10 @@ simpler by there's still a fair amount of setup that needs to be done:
 - add the mesh to the scene
 - render the scene
 
-This is a huge improvement, but there's still lots of things that can go wrong:
+## What Can Go Wrong ##
+
+While libraries like THREE.js are a huge improvement over WebGL's API, there are
+still lots of things that can go wrong:
 
 - the camera is pointing the wrong way/the object is out of view
 - the clipping plane is excluding the object
