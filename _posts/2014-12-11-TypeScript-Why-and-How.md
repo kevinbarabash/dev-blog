@@ -68,5 +68,16 @@ the files you need without having to clone the whole DefinitelyTyped repo or
 download them by hand.
 
 
+## TODO ##
+
+- DefinitelyTyped [done]
+- tsd [done]
+- tslint
+- build tools
+    - tsify
+    - grunt/gulp tsc
+    - tsc's built-in watcher
+    - tsc + watchify
+
 
 DefinitelyTyped:        [https://github.com/borisyankov/DefinitelyTyped]
