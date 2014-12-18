@@ -284,19 +284,59 @@ iterating.
 Lastly, Firefox doesn't parse `yield` statements correctly so escodegen needed
 to be modified to wrap all `yield` statements with parentheses.
 
-## Sneak Peek ##
+## Context ##
 
-Next time we'll look at reccuring function calls and event handling.
+I left an important detail to last because it complicates the general case of 
+converting functions to generators.  The main body of the program is not a 
+function but it is wrapped in a function which is converted to a generator.
+live-editor provides programs access to processing commands by using `with` to
+inject methods from a Processing instance into execution context.  The debugger
+accomplishes this in the following way.
+
+    function transform(code) {
+        // parse code
+        // transform ast
+        return "return function*(context){\nwith(context){\n" +
+                escodegen.generate(ast) + "\n}\n}";
+    }
+                
+The code that's returned by the `transform` function is converted to a function
+which returns a generator function.
+
+    load(code: string) {
+        var debugCode = transform(code, this.context);
+        var debugFunction = new Function(debugCode);
+        this.mainGenerator = debugFunction();
+    }
+    
+This `mainGenerator` functions is called in the Debugger's `start` method where
+a `context` dictionary containing all of the variables that should be added to 
+the execution scope is passed in.
+
+    start(paused) {
+        this.scheduler.clear();
+        this.onMainStart();
+
+        var stepper = this._createStepper(this.mainGenerator(this.context), true);
+
+        this.scheduler.addTask(stepper);
+        stepper.start(paused);  // paused = true -> start paused on the first line
+    }
+    
+## Next Time ##
+
+In [part 2] we'll look at  look at event handling and dealing draw loops.
 
 
-[live-editor]:      https://github.com/Khan/live-editor
-[debugjs]:          https://github.com/amasad/debugjs
-[processing-js]:    http://processingjs.org/
-[stepper]:          http://kevinb7.github.io/stepper/
+[live-editor]:                      https://github.com/Khan/live-editor
+[debugjs]:                          https://github.com/amasad/debugjs
+[processing-js]:                    http://processingjs.org/
+[stepper]:                          http://kevinb7.github.io/stepper/
 [The Basics Of ES6 Generators]:     http://davidwalsh.name/es6-generators
-[blog post]:        http://amasad.me/2014/01/06/building-an-in-browser-javascript-vm-and-debugger-using-generators/
-[esprima]:          https://github.com/ariya/esprima
-[Parser API]:       https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API
-[estraverse]:       https://github.com/estools/estraverse
-[escope]:           https://github.com/estools/escope
-[escodegen]:        https://github.com/estools/escodegen
+[blog post]:                        http://amasad.me/2014/01/06/building-an-in-browser-javascript-vm-and-debugger-using-generators/
+[esprima]:                          https://github.com/ariya/esprima
+[Parser API]:                       https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API
+[estraverse]:                       https://github.com/estools/estraverse
+[escope]:                           https://github.com/estools/escope
+[escodegen]:                        https://github.com/estools/escodegen
+[part 2]:                           /dev-blog/{% post_url 2014-12-17-Writing-a-JavaScript-Debugger-2 %}

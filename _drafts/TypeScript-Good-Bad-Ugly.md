@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "TypeScript: Good, Bad, and Ugly"
-date:   2014-12-11 14:16:23
 categories: TypeScript
 ---
 

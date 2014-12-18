@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Learning/Teaching 3D Programming (is hard)"
-date:   2014-12-08 14:16:23
 categories: 3D education programming
 ---
 

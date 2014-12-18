@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "TypeScript: Why and How"
-date:   2014-12-11 14:16:23
 categories: TypeScript
 ---
 
